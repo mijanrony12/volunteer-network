@@ -11,31 +11,44 @@ const useFirebase = () => {
 
     const signInUsingGoogle = () => {
         signInWithPopup(auth, googleProvider)
-  .then((result) => {
-    setUser(result.user);
-    
-  }).catch((error) => {
-  
-  });
+        .then((result) => {
+            setUser(result.user);
+            console.log(result.user)
+        }).catch((error) => {
+        
+        });
     }
 
     const handleEmailPasswordRegister = (email, password) => {
         createUserWithEmailAndPassword (auth, email, password)
-  .then((result) => {
-   console.log(result.user);
-    // setUser(result.user)
-   
-  })
-  .catch((error) => {
-    
-     setError(error.message)
-  });
+                .then((result) => {
+               
+                    setUser(result.user)
+                
+                })
+                .catch((error) => {
+                    
+                    setError(error.message)
+                });
+    }
+
+
+    const handleEmailPasswordLogIn = (email, password) => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+           setUser(result.user)
+        })
+        .catch((error) => {
+            setError(error.message);
+        });
     }
 
     return {
+        user,
         error,
         signInUsingGoogle,
-        handleEmailPasswordRegister
+        handleEmailPasswordRegister,
+        handleEmailPasswordLogIn
     }
 }
 
